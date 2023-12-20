@@ -1,5 +1,0 @@
-@import 'bulma/css/bulma.css';
-@import url('https://fonts.googleapis.com/css2?family=Caveat&family=Cormorant+Garamond:wght@600&family=Urbanist:ital,wght@1,200&family=Water+Brush&display=swap');
-body, nav, h1, h2, h3, p, button, input {
-    font-family: 'Cormorant Garamond', serif;
-}
