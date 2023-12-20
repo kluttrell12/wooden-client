@@ -1,56 +1,106 @@
-import { useRef, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { loginBuilder } from '../../managers/AuthManager';
+import { useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { loginBuilder } from "../../managers/AuthManager";
+import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
+import WoodenTheme from "../../themes/WoodenTheme";
+
+const theme = WoodenTheme;
 
 export const Login = ({ setToken, setUserId, setStaffBool }) => {
-    const usernameRef = useRef();
-    const passwordRef = useRef();
-    const navigate = useNavigate();
-    const [errorMessage, setErrorMessage] = useState('');
+  const username = useRef();
+  const password = useRef();
+  const navigate = useNavigate();
+  const [isUnsuccessful, setIsUnsuccessful] = useState(false);
 
-    const handleLogin = (e) => {
-        e.preventDefault();
+  const handleLogin = (e) => {
+    e.preventDefault();
 
-        const user = {
-            username: usernameRef.current.value,
-            password: passwordRef.current.value,
-        };
-
-        loginBuilder(user).then(res => {
-            if (res.valid) {
-                setToken(res.token);
-                setUserId(res.user_id);
-                setStaffBool(res.is_staff);
-                navigate('/projects');
-            } else {
-                setErrorMessage('Username or password not valid');
-            }
-        }).catch(() => {
-            setErrorMessage('Login failed due to an unexpected error.');
-        });
+    const user = {
+      username: username.current.value,
+      password: password.current.value,
     };
 
-    return (
-        <section>
-            <form onSubmit={handleLogin}>
-                <p className="subtitle is-5">Please sign in</p>
-                <div>
-                    <label>Username</label>
-                    <input type="text" ref={usernameRef} />
-                </div>
-                <div>
-                    <label>Password</label>
-                    <input type="password" ref={passwordRef} />
-                </div>
-                <button 
-                    className="button has-background-success-dark has-text-white-bis" 
-                    type="submit"
-                >
-                    Submit
-                </button>
-                <Link className="button is-success-dark" to="/register">Cancel</Link>
-                {errorMessage && <p>{errorMessage}</p>}
-            </form>
-        </section>
-    );
+    loginBuilder(user).then((res) => {
+      if ("valid" in res && res.valid) {
+        setToken(res.token);
+        setUserId(res.user_id);
+        setStaffBool(res.is_staff);
+        navigate("/projects");
+      } else {
+        setIsUnsuccessful(true);
+      }
+    });
+  };
+
+  return (
+    <Box>
+      <Typography
+        sx={{
+          fontFamily: theme.typography.fontFamily.main,
+          fontSize: theme.typography.fontSizes.large,
+          color: theme.palette.primary.main,
+        }}
+        variant="h6"
+      >
+        Please sign in
+      </Typography>
+      <FormControl
+        onSubmit={handleLogin}
+        component="form"
+        sx={{ width: "100%" }}
+      >
+        <TextField
+          sx={{
+            fontFamily: theme.typography.fontFamily.main,
+            fontSize: theme.typography.fontSizes.large,
+            color: theme.palette.primary.main,
+          }}
+          label="Username"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          inputRef={username}
+          required
+        />
+        <TextField
+          sx={{
+            fontFamily: theme.typography.fontFamily.main,
+            fontSize: theme.typography.fontSizes.large,
+            color: theme.palette.primary.main,
+          }}
+          label="Password"
+          type="password"
+          variant="outlined"
+          fullWidth
+          margin="normal"
+          inputRef={password}
+          required
+        />
+        <Button
+          sx={{ mt: 2 }}
+          type="submit"
+          variant="contained"
+          color="primary"
+          fullWidth
+        >
+          Submit
+        </Button>
+        <Button
+          sx={{ mt: 2, backgroundColor: theme.palette.secondary.alternate }}
+          component={Link}
+          to="/register"
+          color="secondary"
+          fullWidth
+        >
+          Cancel
+        </Button>
+        {isUnsuccessful && (
+          <Typography color="error" sx={{ mt: 2 }}>
+            Username or password not valid
+          </Typography>
+        )}
+        <Link to="/register">Not a member, join the club!</Link>
+      </FormControl>
+    </Box>
+  );
 };
