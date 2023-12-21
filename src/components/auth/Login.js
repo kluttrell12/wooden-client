@@ -1,7 +1,14 @@
 import { useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { loginBuilder } from "../../managers/AuthManager";
-import { Box, Button, FormControl, TextField, Typography } from "@mui/material";
+import {
+  Box,
+  Button,
+  FormControl,
+  TextField,
+  Typography,
+  Link,
+} from "@mui/material";
 import WoodenTheme from "../../themes/WoodenTheme";
 
 const theme = WoodenTheme;
@@ -34,20 +41,10 @@ export const Login = ({ setToken, setUserId, setStaffBool }) => {
 
   return (
     <Box>
-      <Typography
-        sx={{
-          fontFamily: theme.typography.fontFamily.main,
-          fontSize: theme.typography.fontSizes.large,
-          color: theme.palette.primary.main,
-        }}
-        variant="h6"
-      >
-        Please sign in
-      </Typography>
       <FormControl
         onSubmit={handleLogin}
         component="form"
-        sx={{ width: "100%" }}
+        sx={{ width: "100%", maxWidth: 500 }}
       >
         <TextField
           sx={{
@@ -58,7 +55,6 @@ export const Login = ({ setToken, setUserId, setStaffBool }) => {
           label="Username"
           variant="outlined"
           fullWidth
-          margin="normal"
           inputRef={username}
           required
         />
@@ -83,23 +79,43 @@ export const Login = ({ setToken, setUserId, setStaffBool }) => {
           color="primary"
           fullWidth
         >
-          Submit
+          Log In
         </Button>
-        <Button
-          sx={{ mt: 2, backgroundColor: theme.palette.secondary.alternate }}
+        {/* <Button
+          sx={{
+            mt: 2,
+            backgroundColor: theme.palette.secondary.alternate,
+            "&:hover": {
+              color: "common.white",
+              backgroundColor: 'secondary.main' // Assuming you have this color in your theme
+            },
+          }}
           component={Link}
           to="/register"
-          color="secondary"
           fullWidth
         >
           Cancel
-        </Button>
+        </Button> */}
         {isUnsuccessful && (
           <Typography color="error" sx={{ mt: 2 }}>
             Username or password not valid
           </Typography>
         )}
-        <Link to="/register">Not a member, join the club!</Link>
+
+        <Link
+          component={RouterLink}
+          to="/register"
+          sx={{
+            textDecoration: "none",
+            color: "inherit",
+            marginTop: 2,
+            "&:hover": {
+              color: "primary.alternate", // Assuming you have this color in your theme
+            },
+          }}
+        >
+          Not a member, join the club!
+        </Link>
       </FormControl>
     </Box>
   );

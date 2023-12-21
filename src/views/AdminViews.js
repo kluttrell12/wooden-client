@@ -10,9 +10,11 @@ import { BuilderList } from "../components/builders/BuilderList"
 import { ProjectForm } from "../components/projects/ProjectForm"
 import { EditProject } from "../components/projects/EditProject"
 import { AdminEditBuilder } from "../components/builders/AdminEditBuilder"
+import { HomePage } from "../components/homepage/WelcomePage"
 
 export const AdminViews = ({ token, setToken, setUserId, setStaffBool }) => {
     return <Routes>
+        <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<Login setToken={setToken} setUserId={setUserId} setStaffBool={setStaffBool} />} />
         <Route path="/register" element={<Register setToken={setToken} setUserId={setUserId} setStaffBool={setStaffBool} />} />
         <Route element={<Authorized token={token} />}>

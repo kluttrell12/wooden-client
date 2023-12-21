@@ -14,7 +14,7 @@ const WoodenTheme = createTheme({
       medium: 14,
       large: 18,
       xLarge: 22,
-      xxLarge: 28
+      xxLarge: 28,
     },
     fontWeight: {
       thin: 100,
@@ -26,30 +26,28 @@ const WoodenTheme = createTheme({
       bold: 700,
     },
     fontStyle: {
-      normal: 'normal',
-      italic: 'italic',
-      bold: 'bold',
-      underline: 'underline'
+      normal: "normal",
+      italic: "italic",
+      bold: "bold",
+      underline: "underline",
     },
   },
   palette: {
     primary: {
-        main: '#046241',
-        alternate: '#0A9F6A'
+      main: "#046241",
+      alternate: "#0A9F6A",
     },
     secondary: {
-        main: '#535654',
-        alternate: '#BFC5C1',
-        tertiary: '#E9EDEA'
+      main: "#535654",
+      alternate: "#BFC5C1",
+      tertiary: "#E9EDEA",
     },
     common: {
-        black: '#000000',
-        white: '#FFFFFF',
-        gray: '#808080'
-    }
+      black: "#000000",
+      white: "#FFFFFF",
+      gray: "#808080",
+    },
   },
 });
 
 export default WoodenTheme;
-
-  
