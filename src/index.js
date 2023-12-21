@@ -8,10 +8,9 @@ import { Box, CssBaseline } from "@mui/material";
 import styled from "@emotion/styled";
 
 const WoodenContainer = styled(Box)(({ theme }) => ({
-  backgroundColor: theme.palette.secondary.tertiary, // Adjusted to use palette
-  width: '100%',
-  height: '100vh',
-  padding: 10
+  backgroundColor: theme.palette.common.white, // Adjusted to use palette
+  width: "100vw",
+  height: "100vh",
 }));
 
 const container = document.getElementById("root");
@@ -20,8 +19,8 @@ root.render(
   <Router>
     <ThemeProvider theme={WoodenTheme}>
       <CssBaseline />
-      <WoodenContainer >
-      <Wooden />
+      <WoodenContainer>
+        <Wooden />
       </WoodenContainer>
     </ThemeProvider>
   </Router>

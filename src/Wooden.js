@@ -24,7 +24,7 @@ export const Wooden = () => {
   }
 
   return <>
-    <NavBar token={token} setToken={setToken} />
+  { token ? <NavBar token={token} setToken={setToken} /> : null }
     <ApplicationViews token={token} setToken={setToken} setUserId={setUserId} userId={userId} staffBool={staffBool} setStaffBool={setIsStaff}/>
   </>
 }
