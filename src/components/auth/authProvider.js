@@ -1,0 +1,40 @@
+import { createContext, useState } from "react";
+
+export const AuthContext = createContext();
+
+export const AuthProvider = ({ children }) => {
+  const [token, setTokenState] = useState(localStorage.getItem("auth_token"));
+  const [userId, setUserIdState] = useState(localStorage.getItem("user_id"));
+  const [isStaff, setStaffBool] = useState(localStorage.getItem("is_staff"));
+
+  // Functions to update the state
+  const setToken = (newToken) => {
+    localStorage.setItem("auth_token", newToken);
+    setTokenState(newToken);
+  };
+
+  const setUserId = (newUserId) => {
+    localStorage.setItem("user_id", newUserId);
+    setUserIdState(newUserId);
+  };
+
+  const setIsStaff = (isStaffBoolean) => {
+    localStorage.setItem("is_staff", isStaffBoolean);
+    setStaffBool(isStaffBoolean);
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{
+        token,
+        setToken,
+        userId,
+        setUserId,
+        isStaff,
+        setIsStaff,
+      }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+};

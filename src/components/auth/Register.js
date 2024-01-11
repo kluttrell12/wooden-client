@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { registerBuilder } from "../../managers/AuthManager";
 import {
@@ -10,10 +10,12 @@ import {
   Grid,
 } from "@mui/material";
 import WoodenTheme from "../../themes/WoodenTheme";
+import { AuthContext } from "./authProvider";
 
 const theme = WoodenTheme;
 
-export const Register = ({ setToken, setUserId, setStaffBool }) => {
+export const Register = () => {
+  const { setToken, setUserId, setIsStaff } = useContext(AuthContext)
   const firstName = useRef();
   const lastName = useRef();
   const email = useRef();
@@ -40,7 +42,7 @@ export const Register = ({ setToken, setUserId, setStaffBool }) => {
         if ("valid" in res && res.valid) {
           setToken(res.token);
           setUserId(res.user_id);
-          setStaffBool(res.is_staff);
+          setIsStaff(res.is_staff);
           navigate("/");
         }
       });

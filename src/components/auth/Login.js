@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { loginBuilder } from "../../managers/AuthManager";
 import {
@@ -10,10 +10,12 @@ import {
   Link,
 } from "@mui/material";
 import WoodenTheme from "../../themes/WoodenTheme";
+import { AuthContext } from "./authProvider";
 
 const theme = WoodenTheme;
 
-export const Login = ({ setToken, setUserId, setStaffBool }) => {
+export const Login = () => {
+  const { setToken, setUserId, setIsStaff } = useContext(AuthContext);
   const username = useRef();
   const password = useRef();
   const navigate = useNavigate();
@@ -28,60 +30,60 @@ export const Login = ({ setToken, setUserId, setStaffBool }) => {
     };
 
     loginBuilder(user).then((res) => {
-      if ("valid" in res && res.valid) {
+      if (res.valid) {
         setToken(res.token);
         setUserId(res.user_id);
-        setStaffBool(res.is_staff);
+        setIsStaff(res.is_staff);
         navigate("/projects");
       } else {
         setIsUnsuccessful(true);
       }
     });
-  };
+  }
 
-  return (
-    <Box>
-      <FormControl
-        onSubmit={handleLogin}
-        component="form"
-        sx={{ width: "100%", maxWidth: 500 }}
-      >
-        <TextField
-          sx={{
-            fontFamily: theme.typography.fontFamily.main,
-            fontSize: theme.typography.fontSizes.large,
-            color: theme.palette.primary.main,
-          }}
-          label="Username"
-          variant="outlined"
-          fullWidth
-          inputRef={username}
-          required
-        />
-        <TextField
-          sx={{
-            fontFamily: theme.typography.fontFamily.main,
-            fontSize: theme.typography.fontSizes.large,
-            color: theme.palette.primary.main,
-          }}
-          label="Password"
-          type="password"
-          variant="outlined"
-          fullWidth
-          margin="normal"
-          inputRef={password}
-          required
-        />
-        <Button
-          sx={{ mt: 2 }}
-          type="submit"
-          variant="contained"
-          color="primary"
-          fullWidth
+    return (
+      <Box>
+        <FormControl
+          onSubmit={handleLogin}
+          component="form"
+          sx={{ width: "100%", maxWidth: 500 }}
         >
-          Log In
-        </Button>
-        {/* <Button
+          <TextField
+            sx={{
+              fontFamily: theme.typography.fontFamily.main,
+              fontSize: theme.typography.fontSizes.large,
+              color: theme.palette.primary.main,
+            }}
+            label="Username"
+            variant="outlined"
+            fullWidth
+            inputRef={username}
+            required
+          />
+          <TextField
+            sx={{
+              fontFamily: theme.typography.fontFamily.main,
+              fontSize: theme.typography.fontSizes.large,
+              color: theme.palette.primary.main,
+            }}
+            label="Password"
+            type="password"
+            variant="outlined"
+            fullWidth
+            margin="normal"
+            inputRef={password}
+            required
+          />
+          <Button
+            sx={{ mt: 2 }}
+            type="submit"
+            variant="contained"
+            color="primary"
+            fullWidth
+          >
+            Log In
+          </Button>
+          {/* <Button
           sx={{
             mt: 2,
             backgroundColor: theme.palette.secondary.alternate,
@@ -96,27 +98,28 @@ export const Login = ({ setToken, setUserId, setStaffBool }) => {
         >
           Cancel
         </Button> */}
-        {isUnsuccessful && (
-          <Typography color="error" sx={{ mt: 2 }}>
-            Username or password not valid
-          </Typography>
-        )}
+          {isUnsuccessful && (
+            <Typography color="error" sx={{ mt: 2 }}>
+              Username or password not valid
+            </Typography>
+          )}
 
-        <Link
-          component={RouterLink}
-          to="/register"
-          sx={{
-            textDecoration: "none",
-            color: "inherit",
-            marginTop: 2,
-            "&:hover": {
-              color: "primary.alternate", // Assuming you have this color in your theme
-            },
-          }}
-        >
-          Not a member, join the club!
-        </Link>
-      </FormControl>
-    </Box>
-  );
-};
+          <Link
+            component={RouterLink}
+            to="/register"
+            sx={{
+              textDecoration: "none",
+              color: "inherit",
+              marginTop: 2,
+              "&:hover": {
+                color: "primary.alternate", // Assuming you have this color in your theme
+              },
+            }}
+          >
+            Not a member, join the club!
+          </Link>
+        </FormControl>
+      </Box>
+    );
+  };
+;

@@ -6,6 +6,7 @@ import { ThemeProvider } from "@emotion/react";
 import WoodenTheme from "./themes/WoodenTheme";
 import { Box, CssBaseline } from "@mui/material";
 import styled from "@emotion/styled";
+import { AuthProvider } from "./components/auth/authProvider";
 
 const WoodenContainer = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.common.white, // Adjusted to use palette
@@ -15,13 +16,16 @@ const WoodenContainer = styled(Box)(({ theme }) => ({
 
 const container = document.getElementById("root");
 const root = createRoot(container);
+
 root.render(
   <Router>
     <ThemeProvider theme={WoodenTheme}>
+      <AuthProvider>
       <CssBaseline />
-      <WoodenContainer>
-        <Wooden />
-      </WoodenContainer>
+        <WoodenContainer>
+          <Wooden />
+        </WoodenContainer>
+      </AuthProvider>
     </ThemeProvider>
   </Router>
 );

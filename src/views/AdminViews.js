@@ -1,6 +1,5 @@
 import { Route, Routes } from "react-router-dom"
 import { Authorized } from "./Authorized"
-import { Login } from "../components/auth/Login"
 import { Register } from "../components/auth/Register"
 import { ProjectList } from "../components/projects/ProjectList"
 import { CatList } from "../components/categories/CatList"
@@ -10,14 +9,13 @@ import { BuilderList } from "../components/builders/BuilderList"
 import { ProjectForm } from "../components/projects/ProjectForm"
 import { EditProject } from "../components/projects/EditProject"
 import { AdminEditBuilder } from "../components/builders/AdminEditBuilder"
-import { HomePage } from "../components/homepage/WelcomePage"
+import { WelcomePage } from "../components/homepage/WelcomePage"
 
-export const AdminViews = ({ token, setToken, setUserId, setStaffBool }) => {
+export const AdminViews = () => {
     return <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<Login setToken={setToken} setUserId={setUserId} setStaffBool={setStaffBool} />} />
-        <Route path="/register" element={<Register setToken={setToken} setUserId={setUserId} setStaffBool={setStaffBool} />} />
-        <Route element={<Authorized token={token} />}>
+        <Route path="/" element={<WelcomePage/>} />
+        <Route path="/register" element={<Register/>} />
+        <Route element={<Authorized/>}>
             {/* ---projects--- */}
             <Route path="/projects" element={<ProjectList />} />
             <Route path="/projects/create" element={<ProjectForm />} />    

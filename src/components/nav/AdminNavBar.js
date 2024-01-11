@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   AppBar,
@@ -14,10 +14,12 @@ import {
   ListItemText,
 } from "@mui/material";
 import WoodenTheme from "../../themes/WoodenTheme";
+import { AuthContext } from "../auth/authProvider";
 
 const theme = WoodenTheme;
 
-export const AdminNavBar = ({ token, setToken }) => {
+export const AdminNavBar = () => {
+  const { token, setToken } = useContext(AuthContext)
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
 

@@ -1,4 +1,4 @@
-import {  useState } from "react";
+import {  useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   AppBar,
@@ -13,10 +13,12 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
+import { AuthContext } from "../auth/authProvider";
 // import MenuIcon from "@mui/icons-material/Menu";
 
 
-export const BuilderNavBar = ({ token, setToken }) => {
+export const BuilderNavBar = () => {
+  const { token, setToken } = useContext(AuthContext)
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
