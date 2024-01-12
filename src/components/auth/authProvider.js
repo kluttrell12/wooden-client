@@ -3,11 +3,10 @@ import { createContext, useState } from "react";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [token, setTokenState] = useState(localStorage.getItem("auth_token"));
+  const [token, setTokenState] = useState(null);
   const [userId, setUserIdState] = useState(localStorage.getItem("user_id"));
   const [isStaff, setStaffBool] = useState(localStorage.getItem("is_staff"));
 
-  // Functions to update the state
   const setToken = (newToken) => {
     localStorage.setItem("auth_token", newToken);
     setTokenState(newToken);
@@ -19,7 +18,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   const setIsStaff = (isStaffBoolean) => {
-    localStorage.setItem("is_staff", isStaffBoolean);
+    localStorage.setItem("is_staff", String(isStaffBoolean));
     setStaffBool(isStaffBoolean);
   };
 

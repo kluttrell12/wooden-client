@@ -5,31 +5,30 @@ import {
   Toolbar,
   Typography,
   IconButton,
-  Button,
-  Box,
   Drawer,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
 } from "@mui/material";
+import { Menu } from "@mui/icons-material";
 import WoodenTheme from "../../themes/WoodenTheme";
 import { AuthContext } from "../auth/authProvider";
 
 const theme = WoodenTheme;
 
 export const AdminNavBar = () => {
-  const { token, setToken } = useContext(AuthContext)
+  const { token, setToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
-    if (
+    const isKeyNavigation =
       event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
+      (event.key === "Tab" || event.key === "Shift");
+
+    if (isKeyNavigation) return;
+
     setDrawerOpen(open);
   };
 
@@ -41,54 +40,60 @@ export const AdminNavBar = () => {
           color="inherit"
           aria-label="menu"
           onClick={toggleDrawer(true)}
-        ></IconButton>
+        >
+          <Menu
+            sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
+          />
+        </IconButton>
         <Typography
           sx={{
             display: "flex",
             alignItems: "center",
-            color: theme.palette.primary.main, // Assuming these values are defined in your theme
+            color: theme.palette.primary.main,
             fontFamily: theme.typography.fontFamily.main,
             fontSize: theme.typography.fontSizes.xLarge,
           }}
         >
           Wooden
         </Typography>
-        <Box sx={{ display: { xs: "none", md: "block" } }}>
+      </Toolbar>
+      <Drawer
+        sx={{
+          color: theme.palette.primary.main,
+          fontFamily: theme.typography.fontFamily.main,
+          fontSize: theme.typography.fontSizes.xLarge,
+        }}
+        anchor="left"
+        open={drawerOpen}
+        onClose={toggleDrawer(false)}
+      >
+        <List>
           {token ? (
             <>
-              <Button color="inherit" component={Link} to="/projects">
-                Projects
-              </Button>
-              <Button color="inherit" component={Link} to="/projects/create">
-                Add a Project
-              </Button>
-              <Button
-                color="inherit"
-                onClick={() => {
-                  setToken("");
-                  navigate("/login");
-                }}
-              >
-                Logout
-              </Button>
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to="/projects">
+                  <ListItemText primary="Projects" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton component={Link} to="/projects/create">
+                  <ListItemText primary="Add a Project" />
+                </ListItemButton>
+              </ListItem>
+              <ListItem disablePadding>
+                <ListItemButton
+                  component={Link}
+                  color="inherit"
+                  onClick={() => {
+                    setToken("");
+                    navigate("/login");
+                  }}
+                >
+                  <ListItemText primary="Logout" />
+                </ListItemButton>
+              </ListItem>
             </>
           ) : null}
-        </Box>
-      </Toolbar>
-      <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
-        <List>
-          {
-            token ? (
-              <>
-                <ListItem disablePadding>
-                  <ListItemButton component={Link} to="/projects">
-                    <ListItemText primary="Projects" />
-                  </ListItemButton>
-                </ListItem>
-                {/* ... other ListItem and ListItemButton components for each link */}
-              </>
-            ) : null // No items if no token
-          }
         </List>
       </Drawer>
     </AppBar>

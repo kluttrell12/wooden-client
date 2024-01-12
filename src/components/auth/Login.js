@@ -23,8 +23,7 @@ export const Login = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-
-    const user = {
+        const user = {
       username: username.current.value,
       password: password.current.value,
     };

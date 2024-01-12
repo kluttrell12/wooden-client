@@ -1,34 +1,34 @@
-import {  useContext, useState } from "react";
+import { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
   Typography,
   IconButton,
-  Button,
-  Box,
   Drawer,
   List,
   ListItem,
   ListItemButton,
   ListItemText,
 } from "@mui/material";
+import { Menu } from "@mui/icons-material";
+import WoodenTheme from "../../themes/WoodenTheme";
 import { AuthContext } from "../auth/authProvider";
-// import MenuIcon from "@mui/icons-material/Menu";
 
+const theme = WoodenTheme;
 
 export const BuilderNavBar = () => {
-  const { token, setToken } = useContext(AuthContext)
+  const { token, setToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
   const toggleDrawer = (open) => (event) => {
-    if (
+    const isKeyNavigation =
       event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
+      (event.key === "Tab" || event.key === "Shift");
+
+    if (isKeyNavigation) return;
+
     setDrawerOpen(open);
   };
 
@@ -41,42 +41,32 @@ export const BuilderNavBar = () => {
           aria-label="menu"
           onClick={toggleDrawer(true)}
         >
+          <Menu
+            sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
+          />
         </IconButton>
-        <Typography variant="h6" sx={{ flexGrow: 1 }}>
+        <Typography
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            color: theme.palette.primary.main, // Assuming these values are defined in your theme
+            fontFamily: theme.typography.fontFamily.main,
+            fontSize: theme.typography.fontSizes.xLarge,
+          }}
+        >
           Wooden
         </Typography>
-        <Box sx={{ display: { xs: "none", md: "block" } }}>
-          {token ? (
-            <>
-              <Button color="inherit" component={Link} to="/projects">
-                Projects
-              </Button>
-              <Button color="inherit" component={Link} to="/projects/create">
-                Add a Project
-              </Button>
-              <Button
-                color="inherit"
-                onClick={() => {
-                  setToken("");
-                  navigate("/login");
-                }}
-              >
-                Logout
-              </Button>
-            </>
-          ) : (
-            <>
-              <Button color="inherit" component={Link} to="/register">
-                Register
-              </Button>
-              <Button color="inherit" component={Link} to="/login">
-                Login
-              </Button>
-            </>
-          )}
-        </Box>
       </Toolbar>
-      <Drawer anchor="left" open={drawerOpen} onClose={toggleDrawer(false)}>
+      <Drawer
+        sx={{
+          color: theme.palette.primary.main,
+          fontFamily: theme.typography.fontFamily.main,
+          fontSize: theme.typography.fontSizes.xLarge,
+        }}
+        anchor="left"
+        open={drawerOpen}
+        onClose={toggleDrawer(false)}
+      >
         <List>
           {token ? (
             <>
@@ -86,12 +76,14 @@ export const BuilderNavBar = () => {
                 </ListItemButton>
               </ListItem>
               <ListItem disablePadding>
-                <ListItemButton component={Link} to="/projects/create">
+                <ListItemButton component={Link} to="/projects">
                   <ListItemText primary="Add a Project" />
                 </ListItemButton>
               </ListItem>
               <ListItem disablePadding>
                 <ListItemButton
+                  component={Link}
+                  color="inherit"
                   onClick={() => {
                     setToken("");
                     navigate("/login");
@@ -101,20 +93,7 @@ export const BuilderNavBar = () => {
                 </ListItemButton>
               </ListItem>
             </>
-          ) : (
-            <>
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to="/register">
-                  <ListItemText primary="Register" />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to="/login">
-                  <ListItemText primary="Login" />
-                </ListItemButton>
-              </ListItem>
-            </>
-          )}
+          ) : null}
         </List>
       </Drawer>
     </AppBar>
