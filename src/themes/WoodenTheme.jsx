@@ -47,6 +47,12 @@ const WoodenTheme = createTheme({
       white: "#FFFFFF",
       gray: "#808080",
     },
+    edit: {
+      main: '#FFD700'
+    },
+    delete: {
+      main: '#8B0000'
+    }
   },
 });
 

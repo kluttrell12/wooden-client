@@ -10,15 +10,17 @@ import {
   ListItem,
   ListItemButton,
   ListItemText,
+  Box,
 } from "@mui/material";
 import { Menu } from "@mui/icons-material";
+import ForestIcon from "@mui/icons-material/Forest";
 import WoodenTheme from "../../themes/WoodenTheme";
 import { AuthContext } from "../auth/authProvider";
 
 const theme = WoodenTheme;
 
 export const AdminNavBar = () => {
-  const { token, setToken } = useContext(AuthContext);
+  const { setToken } = useContext(AuthContext);
   const navigate = useNavigate();
   const [drawerOpen, setDrawerOpen] = useState(false);
 
@@ -35,65 +37,69 @@ export const AdminNavBar = () => {
   return (
     <AppBar position="static" color="default">
       <Toolbar>
-        <IconButton
-          edge="start"
-          color="inherit"
-          aria-label="menu"
-          onClick={toggleDrawer(true)}
-        >
-          <Menu
-            sx={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
-          />
-        </IconButton>
-        <Typography
+        <Box
           sx={{
+            width: "100%",
             display: "flex",
-            alignItems: "center",
-            color: theme.palette.primary.main,
-            fontFamily: theme.typography.fontFamily.main,
-            fontSize: theme.typography.fontSizes.xLarge,
+            justifyContent: "space-between",
           }}
         >
-          Wooden
-        </Typography>
+          <Box display={"flex"} alignItems={"center"}>
+            <Typography
+              sx={{
+                display: "flex",
+                alignItems: "center",
+                color: theme.palette.primary.main,
+                fontFamily: theme.typography.fontFamily.main,
+                fontSize: theme.typography.fontSizes.xLarge,
+              }}
+            >
+              Wooden
+            </Typography>
+            <ForestIcon sx={{ color: theme.palette.primary.main }} />
+          </Box>
+          <IconButton
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            onClick={toggleDrawer(true)}
+          >
+            <Menu sx={{color: theme.palette.primary.main}}  />
+          </IconButton>
+        </Box>
       </Toolbar>
       <Drawer
         sx={{
-          color: theme.palette.primary.main,
           fontFamily: theme.typography.fontFamily.main,
           fontSize: theme.typography.fontSizes.xLarge,
         }}
-        anchor="left"
+        anchor="right"
         open={drawerOpen}
         onClose={toggleDrawer(false)}
       >
         <List>
-          {token ? (
-            <>
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to="/projects">
-                  <ListItemText primary="Projects" />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton component={Link} to="/projects/create">
-                  <ListItemText primary="Add a Project" />
-                </ListItemButton>
-              </ListItem>
-              <ListItem disablePadding>
-                <ListItemButton
-                  component={Link}
-                  color="inherit"
-                  onClick={() => {
-                    setToken("");
-                    navigate("/login");
-                  }}
-                >
-                  <ListItemText primary="Logout" />
-                </ListItemButton>
-              </ListItem>
-            </>
-          ) : null}
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/projects">
+              <ListItemText primary="Projects" sx={{color: theme.palette.primary.main}} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={Link} to="/projects/create">
+              <ListItemText primary="Add a Project" sx={{color: theme.palette.primary.main}} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton
+              component={Link}
+              color="inherit"
+              onClick={() => {
+                setToken("");
+                navigate("/login");
+              }}
+            >
+              <ListItemText primary="Logout" sx={{color: theme.palette.primary.main}} />
+            </ListItemButton>
+          </ListItem>
         </List>
       </Drawer>
     </AppBar>
