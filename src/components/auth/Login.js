@@ -82,27 +82,11 @@ export const Login = () => {
           >
             Log In
           </Button>
-          {/* <Button
-          sx={{
-            mt: 2,
-            backgroundColor: theme.palette.secondary.alternate,
-            "&:hover": {
-              color: "common.white",
-              backgroundColor: 'secondary.main' // Assuming you have this color in your theme
-            },
-          }}
-          component={Link}
-          to="/register"
-          fullWidth
-        >
-          Cancel
-        </Button> */}
           {isUnsuccessful && (
             <Typography color="error" sx={{ mt: 2 }}>
               Username or password not valid
             </Typography>
           )}
-
           <Link
             component={RouterLink}
             to="/register"
@@ -111,7 +95,7 @@ export const Login = () => {
               color: "inherit",
               marginTop: 2,
               "&:hover": {
-                color: "primary.alternate", // Assuming you have this color in your theme
+                color: theme.palette.primary.alternate,
               },
             }}
           >
